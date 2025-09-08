@@ -607,6 +607,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 941518843}
+  - component: {fileID: 941518844}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -629,6 +630,25 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &941518844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 941518842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b02bf8e83691774997358a0c8894676, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  width: 500
+  height: 300
+  stageImage: {fileID: 1773734699}
+  candySprites:
+  - {fileID: -2757008047180432429, guid: d3a354f3c3ca3624aa5d5af3c9d87f6f, type: 3}
+  spawnInterval: 5
+  growDuration: 2
 --- !u!1 &1148939628
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,7 +735,6 @@ GameObject:
   - component: {fileID: 1773734697}
   - component: {fileID: 1773734700}
   - component: {fileID: 1773734699}
-  - component: {fileID: 1773734698}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -742,25 +761,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 44}
   m_SizeDelta: {x: 500, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1773734698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1773734696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b02bf8e83691774997358a0c8894676, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  width: 500
-  height: 300
-  image: {fileID: 1773734699}
-  candyTextures:
-  - {fileID: 2800000, guid: d3a354f3c3ca3624aa5d5af3c9d87f6f, type: 3}
-  candySprites:
-  - {fileID: -2757008047180432429, guid: d3a354f3c3ca3624aa5d5af3c9d87f6f, type: 3}
 --- !u!114 &1773734699
 MonoBehaviour:
   m_ObjectHideFlags: 0
