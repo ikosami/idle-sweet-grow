@@ -14,8 +14,13 @@ public class StageManger : MonoBehaviour
 
     Texture2D stageTexture;
 
+    public static StageManger Instance { get; private set; }
+    int money = 0;
+
     void Awake()
     {
+        Instance = this;
+
         stageTexture = new Texture2D(width, height, TextureFormat.ARGB32, false);
         var pixels = new Color32[width * height];
         for (int i = 0; i < pixels.Length; i++) pixels[i] = Color.clear;
@@ -89,5 +94,11 @@ public class StageManger : MonoBehaviour
             yield return null;
         }
         img.fillAmount = 1f;
+    }
+
+    public void AddMoney(int amount)
+    {
+        money += amount;
+        Debug.Log($"Money: {money}");
     }
 }

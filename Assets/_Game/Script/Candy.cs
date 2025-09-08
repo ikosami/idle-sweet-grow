@@ -32,5 +32,7 @@ public class Candy : MonoBehaviour, IPointerDownHandler
             }
 
         texture.Apply();
+
+        StageManger.Instance?.AddMoney(1);
     }
 }
