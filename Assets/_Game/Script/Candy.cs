@@ -1,8 +1,7 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Candy : MonoBehaviour, IPointerDownHandler
+public class Candy : MonoBehaviour
 {
     Texture2D texture;
     Image image;
@@ -13,10 +12,10 @@ public class Candy : MonoBehaviour, IPointerDownHandler
         image = img;
     }
 
-    public void OnPointerDown(PointerEventData e)
+    public void Erase(Vector2 screenPos, Camera cam)
     {
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            (RectTransform)transform, e.position, e.pressEventCamera, out var local);
+            (RectTransform)transform, screenPos, cam, out var local);
 
         Rect rect = image.rectTransform.rect;
         int px = Mathf.RoundToInt((local.x + rect.width * 0.5f) / rect.width * texture.width);

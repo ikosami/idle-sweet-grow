@@ -1,9 +1,10 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class StageManger : MonoBehaviour
+public class StageManger : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] int width = 500;
     [SerializeField] int height = 300;
@@ -13,6 +14,7 @@ public class StageManger : MonoBehaviour
     [SerializeField] float growDuration = 2f;
 
     Texture2D stageTexture;
+    readonly List<Candy> candies = new List<Candy>();
 
     void Awake()
     {
@@ -65,6 +67,7 @@ public class StageManger : MonoBehaviour
 
         Candy candy = go.GetComponent<Candy>();
         candy.Initialize(tex, img);
+        candies.Add(candy);
 
         StartCoroutine(Grow(img));
     }
@@ -89,5 +92,11 @@ public class StageManger : MonoBehaviour
             yield return null;
         }
         img.fillAmount = 1f;
+    }
+
+    public void OnPointerDown(PointerEventData e)
+    {
+        foreach (var candy in candies)
+            candy.Erase(e.position, e.pressEventCamera);
     }
 }
