@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
+using Unity.VisualScripting;
 
 public class StageManger : MonoBehaviour, IPointerDownHandler
 {
@@ -12,6 +14,8 @@ public class StageManger : MonoBehaviour, IPointerDownHandler
     [SerializeField] Sprite[] candySprites;
     [SerializeField] float spawnInterval = 5f;
     [SerializeField] float growDuration = 2f;
+
+    [SerializeField] TextMeshProUGUI moneyText;
 
     Texture2D stageTexture;
     readonly List<Candy> candies = new List<Candy>();
@@ -30,6 +34,12 @@ public class StageManger : MonoBehaviour, IPointerDownHandler
         stageTexture.Apply();
 
         stageImage.sprite = Sprite.Create(stageTexture, new Rect(0, 0, width, height), new Vector2(0.5f, 0.5f));
+        moneyUpdate();
+    }
+
+    void moneyUpdate()
+    {
+        moneyText.text = $"Money: {money}";
     }
 
     void Start()
@@ -108,6 +118,6 @@ public class StageManger : MonoBehaviour, IPointerDownHandler
     public void AddMoney(int amount)
     {
         money += amount;
-        Debug.Log($"Money: {money}");
+        moneyUpdate();
     }
 }
