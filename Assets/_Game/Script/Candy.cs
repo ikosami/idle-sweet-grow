@@ -5,11 +5,15 @@ public class Candy : MonoBehaviour
 {
     Texture2D texture;
     Image image;
+    bool rising;
 
     public void Initialize(Texture2D tex, Image img)
     {
         texture = tex;
         image = img;
+        var rt = image.rectTransform;
+        rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, -rt.rect.height);
+        rising = true;
     }
 
     public void Erase(Vector2 screenPos, Camera cam)
@@ -33,5 +37,18 @@ public class Candy : MonoBehaviour
         texture.Apply();
 
         StageManger.Instance?.AddMoney(1);
+    }
+
+    void Update()
+    {
+        if (!rising) return;
+        var rt = image.rectTransform;
+        float y = rt.anchoredPosition.y + 1f;
+        if (y >= 0f)
+        {
+            y = 0f;
+            rising = false;
+        }
+        rt.anchoredPosition = new Vector2(rt.anchoredPosition.x, y);
     }
 }

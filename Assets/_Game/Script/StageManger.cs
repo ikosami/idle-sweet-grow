@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
-using Unity.VisualScripting;
 
 public class StageManger : MonoBehaviour, IPointerDownHandler
 {
@@ -13,7 +12,6 @@ public class StageManger : MonoBehaviour, IPointerDownHandler
     [SerializeField] Image stageImage;
     [SerializeField] Sprite[] candySprites;
     [SerializeField] float spawnInterval = 5f;
-    [SerializeField] float growDuration = 2f;
 
     [SerializeField] TextMeshProUGUI moneyText;
 
@@ -68,10 +66,6 @@ public class StageManger : MonoBehaviour, IPointerDownHandler
 
         Image img = go.GetComponent<Image>();
         img.sprite = sprite;
-        img.type = Image.Type.Filled;
-        img.fillMethod = Image.FillMethod.Vertical;
-        img.fillOrigin = (int)Image.OriginVertical.Bottom;
-        img.fillAmount = 0f;
         img.SetNativeSize();
 
         RectTransform rt = img.rectTransform;
@@ -83,8 +77,6 @@ public class StageManger : MonoBehaviour, IPointerDownHandler
         Candy candy = go.GetComponent<Candy>();
         candy.Initialize(tex, img);
         candies.Add(candy);
-
-        StartCoroutine(Grow(img));
     }
 
     Sprite CreateSpriteCopy(Sprite source, out Texture2D tex)
@@ -95,18 +87,6 @@ public class StageManger : MonoBehaviour, IPointerDownHandler
         tex.SetPixels(pixels);
         tex.Apply();
         return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0f), source.pixelsPerUnit);
-    }
-
-    IEnumerator Grow(Image img)
-    {
-        float t = 0f;
-        while (t < growDuration)
-        {
-            t += Time.deltaTime;
-            img.fillAmount = t / growDuration;
-            yield return null;
-        }
-        img.fillAmount = 1f;
     }
 
     public void OnPointerDown(PointerEventData e)
