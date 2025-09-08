@@ -31,5 +31,7 @@ public class Candy : MonoBehaviour
             }
 
         texture.Apply();
+
+        StageManger.Instance?.AddMoney(1);
     }
 }

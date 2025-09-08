@@ -16,8 +16,13 @@ public class StageManger : MonoBehaviour, IPointerDownHandler
     Texture2D stageTexture;
     readonly List<Candy> candies = new List<Candy>();
 
+    public static StageManger Instance { get; private set; }
+    int money = 0;
+
     void Awake()
     {
+        Instance = this;
+
         stageTexture = new Texture2D(width, height, TextureFormat.ARGB32, false);
         var pixels = new Color32[width * height];
         for (int i = 0; i < pixels.Length; i++) pixels[i] = Color.clear;
@@ -98,5 +103,11 @@ public class StageManger : MonoBehaviour, IPointerDownHandler
     {
         foreach (var candy in candies)
             candy.Erase(e.position, e.pressEventCamera);
+    }
+
+    public void AddMoney(int amount)
+    {
+        money += amount;
+        Debug.Log($"Money: {money}");
     }
 }
