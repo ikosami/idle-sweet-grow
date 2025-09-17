@@ -505,10 +505,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1148939629}
-  - {fileID: 1773734697}
   - {fileID: 1025621942}
   - {fileID: 719583924}
   - {fileID: 307799397}
+  - {fileID: 1773734697}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -780,13 +780,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b02bf8e83691774997358a0c8894676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 500
-  height: 300
+  width: 320
+  height: 100
   stageImage: {fileID: 1773734699}
-  candySprites:
-  - {fileID: -2757008047180432429, guid: d3a354f3c3ca3624aa5d5af3c9d87f6f, type: 3}
+  candySprites: []
   spawnInterval: 5
   moneyText: {fileID: 719583925}
+  layerDefinitions:
+  - layerName: test
+    sprite: {fileID: 21300000, guid: 9b2cd7940804c1c468bec9375850de7d, type: 3}
+    oreValue: 1
+    hardness: 1
+  miningRadius: 1
+  miningPower: 1
 --- !u!1 &1025621941
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,7 +827,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 121, y: 43}
+  m_AnchoredPosition: {x: 121, y: 29}
   m_SizeDelta: {x: 40, y: 38}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1025621943
@@ -844,7 +850,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -5023894670988180731, guid: 384fcdd72bd534045a99465b22ee621d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 384fcdd72bd534045a99465b22ee621d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -969,10 +975,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 533895198}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -40}
+  m_SizeDelta: {x: 320, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1773734699
 MonoBehaviour:
