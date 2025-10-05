@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StageBuilder
 {
@@ -8,14 +9,16 @@ public class StageBuilder
     StageLayerDefinition[] layerDefinitions;
     public LayerDepthRule[] depthRules;
 
+    public Image Image { get; private set; }
     public Texture2D StageTexture { get; private set; }
     public Color32[] StagePixels { get; private set; }
     public int[] LayerIndexMap { get; private set; }
     public float[] DurabilityMap { get; private set; }
     public StageLayerInfo[] LayerInfos { get; private set; }
 
-    public StageBuilder(int width, int height, StageLayerDefinition[] defs, LayerDepthRule[] depthRules)
+    public StageBuilder(Image image, int width, int height, StageLayerDefinition[] defs, LayerDepthRule[] depthRules)
     {
+        this.Image = image;
         this.width = width;
         this.height = height;
         this.layerDefinitions = defs;
@@ -129,6 +132,72 @@ public class StageBuilder
         return Sprite.Create(StageTexture, new Rect(0, 0, StageTexture.width, StageTexture.height),
                              new Vector2(0.5f, 0.5f));
     }
+
+    public Vector2 MoveCharacterOptimized(Rect charRect, Vector2 velocity)
+    {
+        Vector2 newPos = new Vector2(charRect.x, charRect.y);
+
+        // 移動距離からステップ数（1px単位）
+        float distance = velocity.magnitude;
+        int steps = Mathf.CeilToInt(distance);
+        if (steps == 0) steps = 1;
+
+        Vector2 step = velocity / steps;
+
+        for (int i = 0; i < steps; i++)
+        {
+            // ---- X方向移動 ----
+            if (step.x != 0)
+            {
+                newPos.x += step.x;
+                int checkX = step.x > 0 ?
+                    Mathf.FloorToInt(newPos.x + charRect.width - 0.001f) :
+                    Mathf.FloorToInt(newPos.x);
+
+                int topY = Mathf.CeilToInt(newPos.y + charRect.height - 0.001f);
+                int midY = Mathf.FloorToInt(newPos.y + charRect.height / 2f);
+                int bottomY = Mathf.FloorToInt(newPos.y);
+
+                // 角と中央優先チェック
+                if (IsSolid(checkX, bottomY) || IsSolid(checkX, midY) || IsSolid(checkX, topY))
+                {
+                    newPos.x = step.x > 0 ? checkX - charRect.width : checkX + 1f;
+                    step.x = 0;
+                }
+            }
+
+            // ---- Y方向移動 ----
+            if (step.y != 0)
+            {
+                newPos.y += step.y;
+                int checkY = step.y > 0 ?
+                    Mathf.FloorToInt(newPos.y + charRect.height - 0.001f) :
+                    Mathf.FloorToInt(newPos.y);
+
+                int leftX = Mathf.FloorToInt(newPos.x);
+                int midX = Mathf.FloorToInt(newPos.x + charRect.width / 2f);
+                int rightX = Mathf.CeilToInt(newPos.x + charRect.width - 0.001f);
+
+                // 角と中央優先チェック
+                if (IsSolid(leftX, checkY) || IsSolid(midX, checkY) || IsSolid(rightX, checkY))
+                {
+                    newPos.y = step.y > 0 ? checkY - charRect.height : checkY + 1f;
+                    step.y = 0;
+                }
+            }
+        }
+
+        return newPos;
+    }
+
+    bool IsSolid(int px, int py)
+    {
+        if (px < 0 || py < 0 || px >= width || py >= height) return true;
+        int index = py * width + px;
+        return StagePixels[index].a > 0;
+    }
+
+
 }
 
 

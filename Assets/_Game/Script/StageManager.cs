@@ -2,9 +2,9 @@
 using UnityEngine.UI;
 using TMPro;
 
-public class StageManger : MonoBehaviour
+public class StageManager : MonoBehaviour
 {
-    public static StageManger Instance { get; private set; }
+    public static StageManager Instance { get; private set; }
 
     [SerializeField] int width = 500;
     [SerializeField] int height = 300;
@@ -15,8 +15,7 @@ public class StageManger : MonoBehaviour
     [SerializeField] int miningRadius = 6;
     [SerializeField] float miningPower = 1f;
 
-    StageBuilder builder;
-    StageMiner miner;
+    public StageBuilder builder;
     int money;
 
     void Awake()
@@ -24,7 +23,7 @@ public class StageManger : MonoBehaviour
         Instance = this;
 
         // ステージ構築
-        builder = new StageBuilder(width, height, layerDefinitions, layerDepthRule);
+        builder = new StageBuilder(stageImage, width, height, layerDefinitions, layerDepthRule);
         builder.Build();
 
         // 画像へ反映
@@ -40,8 +39,8 @@ public class StageManger : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             // 採掘担当生成
-            miner = new StageMiner(builder, miningRadius, miningPower);
-            int earned = miner.MineAtScreenPosition(Input.mousePosition, stageImage, Camera.main);
+            StageMiner miner = new StageMiner(builder, miningRadius, miningPower);
+            int earned = miner.MineAtScreenPosition(Input.mousePosition);
             if (earned > 0) AddMoney(earned);
         }
     }

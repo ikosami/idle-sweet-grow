@@ -16,9 +16,14 @@ public class StageMiner
         miningRadius = radius;
         miningPower = power;
     }
-
-    public int MineAtScreenPosition(Vector2 screenPos, UnityEngine.UI.Image stageImage, Camera cam)
+    public int MineAtWorldPosition(Vector3 worldPos)
     {
+        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(null, worldPos);
+        return MineAtScreenPosition(screenPos);
+    }
+    public int MineAtScreenPosition(Vector2 screenPos)
+    {
+        var stageImage = builder.Image;
         RectTransform rt = stageImage.rectTransform;
         if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(rt, screenPos, null, out Vector2 localPoint))
             return 0;
@@ -33,7 +38,7 @@ public class StageMiner
         return MineAtPixel(px, py);
     }
 
-    int MineAtPixel(int centerX, int centerY)
+    public int MineAtPixel(int centerX, int centerY)
     {
         var pixels = builder.StagePixels;
         var durability = builder.DurabilityMap;
